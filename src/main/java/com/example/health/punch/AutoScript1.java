@@ -63,7 +63,7 @@ public class AutoScript1 extends Thread {
             } catch (NoSuchElementException e) {
                 System.out.println(e);
             }
-            if (confirmCode != null){
+            if (confirmCode.getText().equals("验证码")){
                 System.out.println("弹出验证码页面，终止线程");
                 driver.close();
                 break;

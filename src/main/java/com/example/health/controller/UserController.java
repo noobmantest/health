@@ -28,8 +28,9 @@ public class UserController {
 
     @RequestMapping("/autoPunch")
     public String autoPunch(){
-        String s = userService.autoPunch();
-        return s;
+//        String s = userService.autoPunch();
+//        return s;
+        return "请访问 /autoPunch1";
     }
 
     @RequestMapping("/autoPunch1")

@@ -5,6 +5,7 @@ import com.example.health.mapper.UserMapper;
 import com.example.health.punch.AutoScript;
 import com.example.health.punch.AutoScript1;
 import com.example.health.punch.TestScheduled;
+import com.example.health.tools.ScheduledPunch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class UserService {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
-                    TestScheduled.showTimer(0, 20, 10, users);
+                    ScheduledPunch.showTimer(0, 20, 10, users);
 //                    TestScheduled.showTimer(2, 20, 10, users);
 //                    TestScheduled.showTimer(4, 20, 10, users);
 //                    TestScheduled.showTimer(6, 20, 10, users);

@@ -13,7 +13,7 @@ public interface UserMapper {
     List<User> findAll();
 
     @Update("update user set today=#{today} where id = #{id}")
-    int updateUser(int id, int today);
+    int updateUserToday(int id, int today);
 
     @Update("update user set days=#{days} where id = #{id}")
     int updateUserDays(int id, int days);

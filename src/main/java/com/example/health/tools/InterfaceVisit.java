@@ -26,6 +26,8 @@ public class InterfaceVisit {
             e.printStackTrace();
         }
     }
+
+    // 访问指定端口
     public String post(String path,Map<String, String> parameters) throws IOException{
         String resStr = "";
 

@@ -1,8 +1,9 @@
-package com.example.health;
+package com.example.health.test;
 
 import com.example.health.config.MyConfig;
 import com.example.health.tools.InterfaceVisit;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import java.io.IOException;
 import java.util.Date;

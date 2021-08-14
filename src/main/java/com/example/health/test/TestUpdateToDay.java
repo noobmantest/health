@@ -1,8 +1,8 @@
-package com.example.health;
+package com.example.health.test;
 
 import com.example.health.config.MyConfig;
 import com.example.health.tools.InterfaceVisit;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,12 +13,12 @@ public class TestUpdateToDay {
         Map<String, String> map = new HashMap<>();
         map.put("id", "0");
         map.put("today", "5");
-        String post = new InterfaceVisit().post(MyConfig.LocalInterFace + "updateUser", map);
+        String post = new InterfaceVisit().post(MyConfig.LocalInterFace + "updateUserToday", map);
         System.out.println(post);
     }
 
     @Test
-    void test() throws IOException {
+    public void test() throws IOException {
         Map<String, String> map = new HashMap<>();
         map.put("id", "0");
         map.put("days", "31");

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LogInterfaceOperate {
+    // 添加log
     public void insertLog(String user, String password, String reason){
         Map<String, String> map = new HashMap<>();
         map.put("user", user);

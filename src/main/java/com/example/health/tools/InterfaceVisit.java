@@ -17,7 +17,7 @@ public class InterfaceVisit {
             map.put("password", "07024612");
 
 //            System.out.println(post("http://www.baidu.com",map));
-            String res = post("http://192.168.123.175:8888/login", map);
+            String res = new InterfaceVisit().post("http://192.168.123.175:8888/login", map);
             System.out.println(res);
             //报错测试
             //System.out.println(post("https://api.ssllabs.com",null));
@@ -26,7 +26,7 @@ public class InterfaceVisit {
             e.printStackTrace();
         }
     }
-    public static String post(String path,Map<String, String> parameters) throws IOException{
+    public String post(String path,Map<String, String> parameters) throws IOException{
         String resStr = "";
 
         URL url = new URL(path);

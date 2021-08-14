@@ -26,16 +26,19 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping("/autoPunch")
-    public String autoPunch(){
-//        String s = userService.autoPunch();
-//        return s;
-        return "请访问 /autoPunch1";
+
+
+    // 修改今天打卡状态
+    @RequestMapping("/updateUser")
+    public int updateUser(int id, int today){
+        int i = userService.updateUser(id, today);
+        return i;
     }
 
-    @RequestMapping("/autoPunch1")
-    public String autoPunch1(){
-        String s = userService.autoPunch1();
-        return s;
+    // 修改打卡天数
+    @RequestMapping("/updateUserDays")
+    public int updateUserDays(int id, int days){
+        int i = userService.updateUserDays(id, days);
+        return i;
     }
 }

@@ -20,24 +20,17 @@ public class ScheduledPunch {
 
                 for (User user : users) {
                     if (user.getToday().equals("0") || user.getDays() > 0) {
-                        // 访问接口
-                        try {
-                            Map<String, String> map = new HashMap<>();
-                            map.put("user", user.getUser());
-                            map.put("password", user.getPassword());
+                        // 访问打卡接口
+                        String res = new AutoPunchOperate().autoPunch(user);
 
-                            String res = new InterfaceVisit().post(MyConfig.IntegerFacePath, map);
-                            System.out.println(res);
-                            if (res.equals("verificationCode")){
-                                break;
-                            }
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                        // 访问天界log数据接口 添加log数据
+                        new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), res);
+
+                        // 如果弹出验证码则打断
+                        if (res.equals("verificationCode")) {
+                            break;
                         }
                     }
-
-
                 }
             }
         };

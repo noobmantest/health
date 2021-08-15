@@ -1,8 +1,8 @@
 package com.example.health.controller;
 
 import com.example.health.service.AutoPunchService;
+import com.example.health.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,10 +11,13 @@ public class AutoPunchController {
     @Autowired
     AutoPunchService autoPunchService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/autoPunch")
     public String autoPunch() {
         String s = autoPunchService.autoPunch();
-        return s + "autoPunch";
+        return s + "autoPunch，启动定时每天22：00：10更改today状态";
     }
 
     @RequestMapping("/autoPunch1")

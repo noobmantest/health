@@ -12,6 +12,8 @@ import java.util.List;
 public class AutoPunchService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    UserService userService;
     private static boolean flag = true;
     private static boolean flag1 = true;
     private static boolean flag2 = true;
@@ -30,6 +32,7 @@ public class AutoPunchService {
             };
             thread.start();
             flag = false;
+            userService.changeUsersToday();
             return "打卡启动";
         } else {
             return "打卡已经启动";

@@ -65,6 +65,8 @@ public class SendEmailTools {
 
         //关闭连接
         transport.close();
+
+        System.out.println("发送邮件成功！To："+toEmail);
     }
 
 }

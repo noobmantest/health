@@ -26,9 +26,15 @@ public class UserController {
         return userService.findAll();
     }
 
+    // 添加用户
+    @RequestMapping("/insertUser")
+    public int insertUser(User user) {
+        return userService.insertUser(user);
+    }
+
     // 修改今天打卡状态
     @RequestMapping("/updateUserToday")
-    public int updateUser(int id, int today) {
+    public int updateUser(int id, String today) {
         int i = userService.updateUserToday(id, today);
         return i;
     }

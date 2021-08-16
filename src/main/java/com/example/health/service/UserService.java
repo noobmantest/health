@@ -3,7 +3,6 @@ package com.example.health.service;
 import com.example.health.entity.User;
 import com.example.health.mapper.UserMapper;
 import com.example.health.tools.ScheduledChangeUsersToday;
-import com.sun.xml.internal.ws.spi.db.DatabindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +15,17 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    // 查找所有用户
     public List<User> findAll() {
         return userMapper.findAll();
     }
 
+    // 更改今天状态
     public int updateUserToday(int id, String today) {
         return userMapper.updateUserToday(id, today);
     }
 
+    // 更改剩余天数
     public int updateUserDays(int id, int days) {
         return userMapper.updateUserDays(id, days);
     }
@@ -33,6 +35,9 @@ public class UserService {
         return userMapper.insertUser(user);
     }
 
+    public List<User> findUserByEmail(String email){
+        return userMapper.findUserByEmail(email);
+    }
 
     // 更改每天打卡动态
     public void changeUsersToday() {

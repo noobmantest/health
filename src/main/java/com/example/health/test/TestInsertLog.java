@@ -11,7 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TestInsertLog {
-    @Test
+    public static void main(String[] args) throws IOException {
+        new TestInsertLog().test();
+    }
+
     void test() throws IOException {
         Map<String, String> map = new HashMap<>();
         map.put("user", "123456");

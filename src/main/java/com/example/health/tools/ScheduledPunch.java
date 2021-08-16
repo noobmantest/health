@@ -75,7 +75,7 @@ public class ScheduledPunch {
                                     e.printStackTrace();
                                 }
                             }
-                        }else if (res.equals("verificationCode")){
+                        } else if (res.equals("verificationCode")) {
                             // 如果时间在9点之后且弹出验证码，提示用户手动打卡
                             int nowHours = new Date().getHours();
                             if (nowHours >= 9) {
@@ -90,7 +90,7 @@ public class ScheduledPunch {
                                     new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
                                     e.printStackTrace();
                                 }
-                            }else {
+                            } else {
                                 // 如果时间在9点之前且弹出验证码，打断接下来的脚本执行
                                 break;
                             }
@@ -112,10 +112,23 @@ public class ScheduledPunch {
         Timer timer = new Timer();
         System.out.println(date);
 
+        // 如果第一次执行定时任务的时间 小于 当前的时间
+        // 此时要在 第一次执行定时任务的时间 加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
+        if (date.before(new Date())) {
+            date = new ScheduledPunch().addDay(date, 1);
+        }
         // 到date时间执行一次，且每间隔一天执行一次
         timer.schedule(task, date, 1000 * 60 * 60 * 24);
 
         //每天的date时刻执行task, 仅执行一次
         //timer.schedule(task, date);
+    }
+
+    // 增加或减少天数
+    public Date addDay(Date date, int num) {
+        Calendar startDT = Calendar.getInstance();
+        startDT.setTime(date);
+        startDT.add(Calendar.DAY_OF_MONTH, num);
+        return startDT.getTime();
     }
 }

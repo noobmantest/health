@@ -21,6 +21,9 @@ public interface UserMapper {
 
 //    @Insert("insert into sys_user values (#{id}, #{username}, #{email}, #{password}, #{phoneNum})")
 
-    @Insert("insert into user values (#{user}, #{password}, #{days}, #{today}, #{email})")
+    @Insert("insert into user values (#{id}, #{user}, #{password}, #{days}, #{today}, #{email})")
     int insertUser(User user);
+
+    @Select("select id,user,email,days,today from user where email=#{email}")
+    List<User> findUserByEmail(String email);
 }

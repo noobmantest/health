@@ -3,12 +3,14 @@ package com.example.health.controller;
 import com.example.health.entity.User;
 import com.example.health.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
     @Autowired
@@ -29,7 +31,14 @@ public class UserController {
     // 添加用户
     @RequestMapping("/insertUser")
     public int insertUser(User user) {
+        System.out.println(user);
         return userService.insertUser(user);
+    }
+
+    // 通过邮箱查找用户
+    @RequestMapping("/findUserByEmail")
+    public List<User> findUserByEmail(String email) {
+        return userService.findUserByEmail(email);
     }
 
     // 修改今天打卡状态

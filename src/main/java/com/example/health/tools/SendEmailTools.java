@@ -37,7 +37,7 @@ public class SendEmailTools {
         });
 
         //开启debug模式
-        session.setDebug(true);
+//        session.setDebug(true);
 
         //获取连接对象
         Transport transport = session.getTransport();
@@ -66,7 +66,7 @@ public class SendEmailTools {
         //关闭连接
         transport.close();
 
-        System.out.println("发送邮件成功！To："+toEmail);
+        System.out.println("发送邮件成功！To：" + toEmail);
     }
 
 }

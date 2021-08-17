@@ -4,8 +4,8 @@ package com.example.health.tools;
 import java.util.*;
 
 public class ScheduledChangeUsersToday {
-    static int count = 0;
 
+    // 定时任务方法,传入每天执行的时间和任务
     public static void showTimer(int hourOfDay, int minute, int second, long period, TimerTask task) {
 
 

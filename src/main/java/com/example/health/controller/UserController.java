@@ -2,6 +2,8 @@ package com.example.health.controller;
 
 import com.example.health.entity.User;
 import com.example.health.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,26 +14,27 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
-
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     UserService userService;
 
     @RequestMapping("/hello")
     public String helloWord() {
+        logger.info("访问hello接口 ==== ");
         System.out.println("fhsdtrysdf");
         return "hello, Spring Boot";
     }
 
     @RequestMapping("/findAll")
     public List<User> findAll() {
-        System.out.println("sdfasdfadgf");
         return userService.findAll();
     }
 
     // 添加用户
     @RequestMapping("/insertUser")
     public int insertUser(User user) {
-        System.out.println(user);
+        logger.info("添加用户 ==== " + user);
+//        System.out.println(user);
         return userService.insertUser(user);
     }
 
@@ -44,6 +47,7 @@ public class UserController {
     // 修改今天打卡状态
     @RequestMapping("/updateUserToday")
     public int updateUser(int id, String today) {
+        logger.info("修改今天打卡状态==== id=" + id + "today= " + today);
         int i = userService.updateUserToday(id, today);
         return i;
     }
@@ -51,6 +55,7 @@ public class UserController {
     // 修改打卡天数
     @RequestMapping("/updateUserDays")
     public int updateUserDays(int id, int days) {
+        logger.info("修改打卡天数==== id=" + id + " ==== days=" + days);
         int i = userService.updateUserDays(id, days);
         return i;
     }

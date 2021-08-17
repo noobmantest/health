@@ -3,6 +3,8 @@ package com.example.health.service;
 import com.example.health.entity.User;
 import com.example.health.mapper.UserMapper;
 import com.example.health.tools.ScheduledChangeUsersToday;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.TimerTask;
 
 @Service
 public class UserService {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     UserMapper userMapper;
 
@@ -35,7 +39,7 @@ public class UserService {
         return userMapper.insertUser(user);
     }
 
-    public List<User> findUserByEmail(String email){
+    public List<User> findUserByEmail(String email) {
         return userMapper.findUserByEmail(email);
     }
 
@@ -47,6 +51,7 @@ public class UserService {
             public void run() {
                 for (User user : userList) {
                     if (user.getToday().equals("1")) {
+                        logger.info("每日定时任务 === 修改今日打卡状态 === " + user.getUser());
                         userMapper.updateUserToday(user.getId(), "0");
                     }
                 }

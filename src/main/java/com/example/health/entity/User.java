@@ -7,8 +7,24 @@ public class User {
     private int days;
     private String today;
     private String email;
+    private String city_code;
+    private String address;
 
+    public String getCity_code() {
+        return city_code;
+    }
 
+    public void setCity_code(String city_code) {
+        this.city_code = city_code;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public int getId() {
         return id;
@@ -67,6 +83,8 @@ public class User {
                 ", days=" + days +
                 ", today='" + today + '\'' +
                 ", email='" + email + '\'' +
+                ", city_code='" + city_code + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

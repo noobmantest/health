@@ -1,6 +1,8 @@
 package com.example.health.tools;
 
 import com.sun.mail.util.MailSSLSocketFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -12,6 +14,8 @@ public class SendEmailTools {
 
     public void sendEmail(String fromEmail, String fromEmailAuthorizationCode, String toEmail, String title,
                           String message) throws GeneralSecurityException, MessagingException {
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.info("发送邮件给用户 ==== " + toEmail + message);
         //创建一个配置文件并保存
         Properties properties = new Properties();
 
@@ -66,7 +70,7 @@ public class SendEmailTools {
         //关闭连接
         transport.close();
 
-        System.out.println("发送邮件成功！To：" + toEmail);
+        logger.info("发送邮件成功！To：" + toEmail);
     }
 
 }

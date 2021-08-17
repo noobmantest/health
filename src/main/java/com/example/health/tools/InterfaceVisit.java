@@ -1,5 +1,8 @@
 package com.example.health.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -10,22 +13,7 @@ import java.util.Map;
 
 public class InterfaceVisit {
 
-    public static void main(String[] args) {
-        try {
-            Map<String, String> map = new HashMap<>();
-            map.put("user", "20177720415");
-            map.put("password", "07024612");
-
-//            System.out.println(post("http://www.baidu.com",map));
-            String res = new InterfaceVisit().post("http://192.168.123.175:8888/login", map);
-            System.out.println(res);
-            //报错测试
-            //System.out.println(post("https://api.ssllabs.com",null));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // 访问指定端口
     public String post(String path,Map<String, String> parameters) throws IOException{
@@ -33,7 +21,8 @@ public class InterfaceVisit {
 
         URL url = new URL(path);
         if (parameters != null) {
-            System.out.println(url.toString() + buildGetParameterString(parameters));
+            logger.info("访问接口 ==== " + url.toString() + buildGetParameterString(parameters));
+//            System.out.println(url.toString() + buildGetParameterString(parameters));
 
             url = new URL(url.toString() + buildGetParameterString(parameters));
         }

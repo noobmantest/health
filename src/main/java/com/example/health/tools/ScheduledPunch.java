@@ -22,7 +22,7 @@ public class ScheduledPunch {
                 LoggerFactory.getLogger(this.getClass()).info("开始循环每位用户打卡 ==== ");
                 for (User user : users) {
                     LoggerFactory.getLogger(this.getClass()).info("循环尝试打卡 ==== " + user);
-                    if (user.getToday().equals("0") || user.getDays() > 0) {
+                    if (user.getToday().equals("0") && user.getDays() > 0) {
                         LoggerFactory.getLogger(this.getClass()).info("符合条件用户开始打卡 ==== " + user);
                         // 访问打卡接口
                         String res = new AutoPunchOperate().autoPunch(user);
@@ -49,7 +49,7 @@ public class ScheduledPunch {
                                 new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
                                 e.printStackTrace();
                             }
-                        } else if (new Date().getHours() >= 9) {
+                        } else if (new Date().getHours() >= 8) {
                             LoggerFactory.getLogger(this.getClass()).info("脚本异常且在9点之后,发送邮件给用户提醒手动打卡 ==== " + user);
                             String message = new Date().toString() + " 账号: " + user.getUser() +
                                     "：脚本异常，请手动打卡，今日打卡不计算入天数哦。" +
@@ -63,6 +63,8 @@ public class ScheduledPunch {
                                 new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
                                 e.printStackTrace();
                             }
+                        }else {
+                            LoggerFactory.getLogger("ScheduledPunch").info("访问打卡接口失败 ==== " + user);
                         }
 //                        } else if (res.equals("accountOrPassword")) {
 //                            // 账号或者密码错误情况
@@ -136,9 +138,9 @@ public class ScheduledPunch {
 
         // 如果第一次执行定时任务的时间 小于 当前的时间
         // 此时要在 第一次执行定时任务的时间 加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
-//        if (date.before(new Date())) {
-//            date = new ScheduledPunch().addDay(date, 1);
-//        }
+        if (date.before(new Date())) {
+            date = new ScheduledPunch().addDay(date, 1);
+        }
         // 到date时间执行一次，且每间隔一天执行一次
         timer.schedule(task, date, 1000 * 60 * 60 * 24);
 

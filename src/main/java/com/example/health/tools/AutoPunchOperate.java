@@ -23,7 +23,7 @@ public class AutoPunchOperate {
         try {
             // 访问接口
             logger.info("访问自动打卡接口 ==== " + user);
-            res = new InterfaceVisit().post(MyConfig.IntegerFacePath, map);
+            res = new InterfaceVisitPost().post(MyConfig.IntegerFacePath, map);
         } catch (IOException e) {
             logger.info("访问自动打卡接口失败 ==== " + map);
             // 失败时添加失败log

@@ -2,6 +2,7 @@ package com.example.health.test;
 
 import com.example.health.config.MyConfig;
 import com.example.health.tools.InterfaceVisit;
+import com.example.health.tools.InterfaceVisitPost;
 import org.junit.Test;
 
 
@@ -26,8 +27,16 @@ public class TestInsertLog {
         System.out.println(post);
     }
 
+
     @Test
-    void testGetDate() {
-        System.out.println(new Date().toString());
+    public void testPostMethod() throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("user", "123456");
+        map.put("password", "123123123");
+        map.put("reason", "success");
+        map.put("time", String.valueOf(System.currentTimeMillis()));
+
+        String post = new InterfaceVisitPost().post(MyConfig.LocalInterFace + "log/insertLog", map);
+        System.out.println(post);
     }
 }

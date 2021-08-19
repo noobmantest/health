@@ -47,7 +47,6 @@ public class UserController {
     // 修改今天打卡状态
     @RequestMapping("/updateUserToday")
     public int updateUser(int id, String today) {
-        logger.info("修改今天打卡状态==== id=" + id + "today= " + today);
         int i = userService.updateUserToday(id, today);
         return i;
     }
@@ -55,7 +54,6 @@ public class UserController {
     // 修改打卡天数
     @RequestMapping("/updateUserDays")
     public int updateUserDays(int id, int days) {
-        logger.info("修改打卡天数==== id=" + id + " ==== days=" + days);
         int i = userService.updateUserDays(id, days);
         return i;
     }

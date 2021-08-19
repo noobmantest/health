@@ -3,12 +3,10 @@ package com.example.health.tools;
 
 import java.util.*;
 
-public class ScheduledChangeUsersToday {
+public class Schedule {
 
     // 定时任务方法,传入每天执行的时间和任务
-    public static void showTimer(int hourOfDay, int minute, int second, long period, TimerTask task) {
-
-
+    public void showTimer(int hourOfDay, int minute, int second, long period, TimerTask task) {
         //设置执行时间
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);

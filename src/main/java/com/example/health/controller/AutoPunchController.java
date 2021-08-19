@@ -4,6 +4,7 @@ import com.example.health.entity.User;
 import com.example.health.service.AutoPunchService;
 import com.example.health.service.UserService;
 import com.example.health.tools.ScheduledPunch;
+import com.example.health.tools.UserPunch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,15 @@ public class AutoPunchController {
     UserService userService;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    // 定时更改用户状态任务
+    @RequestMapping("/changeUsersToday")
+    public String changeUsersToday(){
+        String changeUsersToday = autoPunchService.changeUsersToday();
+        return changeUsersToday;
+    }
+
+    // 测试执行
     @RequestMapping("/autoPunchRunNow")
     public String autoPunchRunNow() {
         // 改变今天的状态
@@ -36,22 +46,16 @@ public class AutoPunchController {
             }
         }
         // 开始打卡
-        List<User> users = userService.findAll();
-        Date date = new Date();
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                ScheduledPunch.showTimer(date.getHours(), date.getMinutes()+1, 30, users);
-            }
-        };
-        thread.start();
+        for (User user : userList) {
+            new UserPunch().punch(user);
+        }
         return "autoPunchRunNow打卡启动";
     }
 
     @RequestMapping("/autoPunch")
     public String autoPunch() {
         String s = autoPunchService.autoPunch();
-        return s + "autoPunch，启动定时每天22：00：10更改today状态";
+        return s + "autoPunch";
     }
 
     @RequestMapping("/autoPunch1")
@@ -72,11 +76,6 @@ public class AutoPunchController {
         return s + "autoPunch3";
     }
 
-    @RequestMapping("/autoPunch4")
-    public String autoPunch4() {
-        String s = autoPunchService.autoPunch4();
-        return s + "autoPunch4";
-    }
 
     @RequestMapping("/autoPunch5")
     public String autoPunch5() {

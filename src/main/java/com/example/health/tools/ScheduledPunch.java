@@ -66,60 +66,6 @@ public class ScheduledPunch {
                         }else {
                             LoggerFactory.getLogger("ScheduledPunch").info("访问打卡接口失败 ==== " + user);
                         }
-//                        } else if (res.equals("accountOrPassword")) {
-//                            // 账号或者密码错误情况
-//                            // 剩余天数减少1
-//                            new UserOperate().daysDown(user, -1);
-//                            // 今天不再打卡，改变今天打卡状态，避免以后进程扫描到
-//                            new UserOperate().todayChange(user, "1");
-//                            // 发送邮件给用户
-//                            String message = new Date().toString() +
-//                                    "：账号或密码错误！请及时修改账号和密码，今日记得手动打卡哦。" +
-//                                    "感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
-//                            try {
-//                                new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
-//                                        user.getEmail(), "每日健康打卡", message);
-//                            } catch (Exception e) {
-//                                // 发送邮件失败情况，添加日志
-//                                new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
-//                                e.printStackTrace();
-//                            }
-//                        } else if (res.equals("scriptException")) {
-//                            // 如果时间在9点之后且者脚本异常，提示用户手动打卡
-//                            int nowHours = new Date().getHours();
-//                            if (nowHours > 9) {
-//                                String message = new Date().toString() +
-//                                        "：脚本异常，请手动打卡，今日打卡不计算入天数哦。" +
-//                                        "感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
-//                                try {
-//                                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
-//                                            user.getEmail(), "每日健康打卡", message);
-//                                } catch (Exception e) {
-//                                    // 发送邮件失败情况，添加日志
-//                                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        } else if (res.equals("verificationCode")) {
-//                            // 如果时间在9点之后且弹出验证码，提示用户手动打卡
-//                            int nowHours = new Date().getHours();
-//                            if (nowHours >= 9) {
-//                                String message = new Date().toString() +
-//                                        "：脚本异常，请手动打卡，今日打卡不计算入天数哦。" +
-//                                        "感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
-//                                try {
-//                                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
-//                                            user.getEmail(), "每日健康打卡", message);
-//                                } catch (Exception e) {
-//                                    // 发送邮件失败情况，添加日志
-//                                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
-//                                    e.printStackTrace();
-//                                }
-//                            } else {
-//                                // 如果时间在9点之前且弹出验证码，打断接下来的脚本执行
-//                                break;
-//                            }
-//                        }
                     }
                 }
             }

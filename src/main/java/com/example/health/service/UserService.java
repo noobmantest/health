@@ -2,13 +2,13 @@ package com.example.health.service;
 
 import com.example.health.entity.User;
 import com.example.health.mapper.UserMapper;
-import com.example.health.tools.ScheduledChangeUsersToday;
+
+import com.example.health.tools.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -18,19 +18,25 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    UserService userService;
 
     // 查找所有用户
     public List<User> findAll() {
-        return userMapper.findAll();
+        List<User> userList = userMapper.findAll();
+        logger.info("查询所有用户 ==== " + userList);
+        return userList;
     }
 
     // 更改今天状态
     public int updateUserToday(int id, String today) {
+        logger.info("修改今天打卡状态==== id=" + id + "today= " + today);
         return userMapper.updateUserToday(id, today);
     }
 
     // 更改剩余天数
     public int updateUserDays(int id, int days) {
+        logger.info("修改打卡天数==== id=" + id + " ==== days=" + days);
         return userMapper.updateUserDays(id, days);
     }
 
@@ -44,22 +50,26 @@ public class UserService {
     }
 
     // 更改每天打卡动态
-    public void changeUsersToday() {
-        List<User> userList = userMapper.findAll();
+    public String changeUsersToday() {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                // 查找所有用户 逐个更改用户今日状态
+                List<User> userList = userService.findAll();
                 for (User user : userList) {
                     if (user.getToday().equals("1")) {
-                        logger.info("每日定时任务 === 修改今日打卡状态 === " + user.getUser());
-                        userMapper.updateUserToday(user.getId(), "0");
+                        logger.info("每日定时任务 === 修改今日打卡状态 === " + user);
+//                        userMapper.updateUserToday(user.getId(), "0");
+                        userService.updateUserToday(user.getId(), "0");
+                        logger.info("每日定时任务 === 修改今日打卡状态 === 更改成功 === " + user);
                     }
                 }
             }
         };
 
         // 定时22：00：10执行，每隔一天执行一次
-        ScheduledChangeUsersToday.showTimer(22, 00, 10, 1000 * 60 * 60 * 24, task);
-        System.out.println(new Date().toString() + "：定时22：00：10执行，每隔一天执行一次");
+        new Schedule().showTimer(22, 00, 10, 1000 * 60 * 60 * 24, task);
+        logger.info("定时任务修改用户每日状态22：00：10执行，每隔一天执行一次");
+        return "定时任务修改用户每日状态22：00：10执行，每隔一天执行一次";
     }
 }

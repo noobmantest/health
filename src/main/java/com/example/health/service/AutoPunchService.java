@@ -24,6 +24,20 @@ public class AutoPunchService {
     private static boolean flag4 = true;
     private static boolean flag5 = true;
 
+    // 一键启动
+    public String oneTouchStart() {
+        // 启动每天改变用户打卡状态
+        String changeUsersToday = changeUsersToday();
+        // 启动0:20:00打卡，其中autoPunch5必须启动，他是最后一次尝试打卡
+        String autoPunch = autoPunch();
+        String autoPunch1 = autoPunch1();
+        String autoPunch2 = autoPunch2();
+        String autoPunch5 = autoPunch5();
+        String res = changeUsersToday + "\n" + autoPunch + "\n" + autoPunch1 + "\n" + autoPunch2 + "\n" + autoPunch5 + "\n";
+        System.out.println(res);
+        return res;
+    }
+
     //定时更新用户每日状态
     public String changeUsersToday() {
         logger.info("启动定时任务 === 每日更新用户今日状态  === 访问接口");
@@ -51,7 +65,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                              new UserPunch().punch(user);
+                            new UserPunch().punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }

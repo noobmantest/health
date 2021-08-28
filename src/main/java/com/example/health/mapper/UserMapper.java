@@ -5,10 +5,13 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @Mapper
+@Repository
 public interface UserMapper {
     @Select("SELECT * FROM user")
     List<User> findAll();
@@ -21,11 +24,15 @@ public interface UserMapper {
     @Update("update user set days=#{days} where id = #{id}")
     int updateUserDays(int id, int days);
 
-//    @Insert("insert into sys_user values (#{id}, #{username}, #{email}, #{password}, #{phoneNum})")
-
+    // 添加用户
     @Insert("insert into user values (#{id}, #{user}, #{password}, #{days}, #{today}, #{email}, #{city_code}, #{address} )")
     int insertUser(User user);
 
+    // 通过邮箱查询用户
     @Select("select id,user,email,days,today,city_code,address  from user where email=#{email}")
     List<User> findUserByEmail(String email);
+
+    // 通过用户名查询用户
+    @Select("select id,user,email,days,today,city_code,address from user where user=#{user}")
+    List<User> findUserByUser(String user);
 }

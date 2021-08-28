@@ -4,14 +4,36 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://81.70.250.230:3306/test?useUnicode=true;characterEncoding=UTF-8;useSSL=false;serverTimezone = GMT
-#    测试数据库
+    #    url: jdbc:mysql://81.70.250.230:3306/test?useUnicode=true;characterEncoding=UTF-8;useSSL=false;serverTimezone = GMT
+    #    测试数据库
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true;characterEncoding=UTF-8;useSSL=false;serverTimezone = GMT
     username: root
     password: 17633908064
     hikari:
       max-lifetime: 500000
+  config:
+    activate:
+      on-profile: pro
 
-#mybatis:
-#  mapper-locations: classpath:mapper/*.xml
+---
 
+server:
+  port: 9000
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://81.70.250.230:3306/test?useUnicode=true;characterEncoding=UTF-8;useSSL=false;serverTimezone = GMT
+    #    测试数据库
+    url: jdbc:mysql://127.0.0.1:3306/health_test?useUnicode=true;characterEncoding=UTF-8;useSSL=false;serverTimezone = GMT
+    username: root
+    password: 17633908064
+    hikari:
+      max-lifetime: 500000
+  config:
+    activate:
+      on-profile: dev
+---
+spring:
+  profiles:
+    active: dev

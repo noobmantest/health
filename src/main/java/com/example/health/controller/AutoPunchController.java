@@ -3,18 +3,14 @@ package com.example.health.controller;
 import com.example.health.entity.User;
 import com.example.health.service.AutoPunchService;
 import com.example.health.service.UserService;
-import com.example.health.tools.ScheduledPunch;
 import com.example.health.tools.UserPunch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
-import java.util.TimerTask;
 
 
 @RestController
@@ -26,11 +22,9 @@ public class AutoPunchController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // 定时更改用户状态任务
-    @RequestMapping("/changeUsersToday")
-    public String changeUsersToday(){
-        String changeUsersToday = autoPunchService.changeUsersToday();
-        return changeUsersToday;
+    @RequestMapping("/oneTouchStart")
+    public String oneTouchStart() {
+        return autoPunchService.oneTouchStart();
     }
 
     // 测试执行
@@ -46,10 +40,19 @@ public class AutoPunchController {
             }
         }
         // 开始打卡
+        // 更改后再次查询
+        userList = userService.findAll();
         for (User user : userList) {
             new UserPunch().punch(user);
         }
         return "autoPunchRunNow打卡启动";
+    }
+
+    // 定时更改用户状态任务
+    @RequestMapping("/changeUsersToday")
+    public String changeUsersToday() {
+        String changeUsersToday = autoPunchService.changeUsersToday();
+        return changeUsersToday;
     }
 
     @RequestMapping("/autoPunch")

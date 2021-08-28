@@ -3,6 +3,10 @@ package com.example.health.tools;
 
 import java.util.*;
 
+/*
+ * 定时器，传入定时执行时间，
+ * 通过传入参数定时每天什么时间执行
+ * 传入定制实行任务TimerTask*/
 public class Schedule {
 
     // 定时任务方法,传入每天执行的时间和任务
@@ -21,7 +25,7 @@ public class Schedule {
         // 如果第一次执行定时任务的时间 小于 当前的时间
         // 此时要在 第一次执行定时任务的时间 加一天，以便此任务在下个时间点执行。如果不加一天，任务会立即执行。
         if (date.before(new Date())) {
-            date = new ScheduledPunch().addDay(date, 1);
+            date = new Schedule().addDay(date, 1);
         }
 
         // 到date时间执行一次，且每间隔一天执行一次
@@ -29,5 +33,13 @@ public class Schedule {
 
         //每天的date时刻执行task, 仅执行一次
         //timer.schedule(task, date);
+    }
+
+    // 增加或减少天数
+    public Date addDay(Date date, int num) {
+        Calendar startDT = Calendar.getInstance();
+        startDT.setTime(date);
+        startDT.add(Calendar.DAY_OF_MONTH, num);
+        return startDT.getTime();
     }
 }

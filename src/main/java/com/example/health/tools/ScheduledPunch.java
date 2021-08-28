@@ -8,6 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/*
+* 此类是个定时器，目前已经废弃
+* 项目中没有任何地方调用此类中的方法
+* */
+
 public class ScheduledPunch {
     static int count = 0;
 

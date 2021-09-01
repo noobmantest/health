@@ -7,6 +7,17 @@ public class Log {
     private String reason;
     private String time;
 
+    public Log() {
+    }
+
+    public Log( String user, String password, String reason, String time) {
+        this.id = id;
+        this.user = user;
+        this.password = password;
+        this.reason = reason;
+        this.time = time;
+    }
+
     public int getId() {
         return id;
     }

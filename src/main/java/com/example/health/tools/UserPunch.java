@@ -1,10 +1,18 @@
 package com.example.health.tools;
 
 import com.example.health.config.MyConfig;
+import com.example.health.entity.Log;
 import com.example.health.entity.User;
+import com.example.health.service.LogService;
+import com.example.health.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /*
@@ -12,8 +20,19 @@ import java.util.Date;
  * 调用AutoPunchOperate.autoPunch()方法
  * 根据返回值判断打卡结果
  * 根据返回值进行数据库的系列操作
- * 根据返回结果发送邮件给用户*/
+ * 根据返回结果发送邮件给用户
+ * */
+
+@Service
+@Component
+@Resource
+@Controller
 public class UserPunch {
+    @Autowired
+    UserService userService;
+    @Autowired
+    LogService logService;
+
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public String punch(User user) {
@@ -26,16 +45,20 @@ public class UserPunch {
             // 切割字符串，获取success，否则是不成功情况
             String isSuccess = res.substring(0, 7);
             // 访问log数据接口 添加log数据
-            new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), isSuccess);
-
+//            new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), isSuccess);
+            Log log = new Log(user.getUser(), user.getPassword(), isSuccess, String.valueOf(System.currentTimeMillis()));
+            logger.info("添加log数据 ==== " + log);
+//            logService.insertLog(log);
 
             // 成功情况
             if (isSuccess.equals("success")) {
                 // 成功情况
                 // 剩余天数减少1
-                new UserOperate().daysDown(user, -1);
+//                new UserOperate().daysDown(user, -1);
+                userService.updateUserDays(user.getId(), user.getDays() - 1);
                 // 今天打卡状态更改为 1，表示打卡成功
-                new UserOperate().todayChange(user, "1");
+//                new UserOperate().todayChange(user, "1");
+                userService.updateUserToday(user.getId(), "1");
                 // 发送邮件给用户
                 String message = new Date().toString() + "账号: " + user.getUser() + "：打卡成功！感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
                 try {
@@ -44,7 +67,10 @@ public class UserPunch {
                 } catch (Exception e) {
                     // 发送邮件失败情况，添加日志
                     logger.error("邮件发送失败 ==== " + user);
-                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
+                    // 发送邮件失败添加日志
+                    // new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
+                    Log logFail = new Log(user.getUser(), user.getPassword(), "sendEmailError", String.valueOf(System.currentTimeMillis()));
+                    logService.insertLog(logFail);
                     e.printStackTrace();
                 }
             } else if (new Date().getHours() >= 8) {
@@ -59,7 +85,9 @@ public class UserPunch {
                 } catch (Exception e) {
                     logger.error("邮件发送失败 ==== " + user);
                     // 发送邮件失败情况，添加日志
-                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
+//                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
+                    Log logFail = new Log(user.getUser(), user.getPassword(), "sendEmailError", String.valueOf(System.currentTimeMillis()));
+                    logService.insertLog(logFail);
                     e.printStackTrace();
                 }
             } else {

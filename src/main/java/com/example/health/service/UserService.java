@@ -45,8 +45,19 @@ public class UserService {
         return userMapper.insertUser(user);
     }
 
+    // 根据邮箱查询用户，不返回密码
     public List<User> findUserByEmail(String email) {
         return userMapper.findUserByEmail(email);
+    }
+
+    // 根据用户名查询用户，返回查询到用户个数
+    public int countUserByUser(String user) {
+        return userMapper.countUserByUser(user).size();
+    }
+
+    // 通过用户名和密码查询用户
+    public List<User> findUserByUserAndPassword(String user, String password) {
+        return userMapper.findUserByUserAndPassword(user, password);
     }
 
     // 更改每天打卡动态

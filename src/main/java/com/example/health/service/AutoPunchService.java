@@ -16,6 +16,8 @@ public class AutoPunchService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     UserService userService;
+    @Autowired
+    UserPunch userPunch;
     private static boolean updateTodayScheduleFlag = true;
     private static boolean flag = true;
     private static boolean flag1 = true;
@@ -65,7 +67,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                            new UserPunch().punch(user);
+                            userPunch.punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }
@@ -96,7 +98,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                            String punch = new UserPunch().punch(user);
+                            String punch = userPunch.punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }
@@ -127,7 +129,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                            String punch = new UserPunch().punch(user);
+                            String punch = userPunch.punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }
@@ -158,7 +160,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                            String punch = new UserPunch().punch(user);
+                            String punch = userPunch.punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }
@@ -190,7 +192,7 @@ public class AutoPunchService {
                         logger.info("开始循环每个用户打卡 ==== " + user);
                         if (user.getToday().equals("0") && user.getDays() > 0) {
                             logger.info("用户符合条件开始打卡 ==== " + user);
-                            String punch = new UserPunch().punch(user);
+                            String punch = userPunch.punch(user);
                         } else {
                             logger.info("用户不符合条件，跳过该用户 ==== " + user);
                         }

@@ -1,3 +1,9 @@
+# 接口环境
+IntegerFacePath: http://81.70.250.230:8888/login
+LocalInterFace: http://81.70.250.230:8889/
+fromEmail: noobmantest@foxmail.com
+fromEmailAuthorizationCode: taffogconzptibic
+
 server:
   port: 8889
 spring:
@@ -16,6 +22,11 @@ spring:
       on-profile: pro
 
 ---
+# 接口环境
+IntegerFacePath: http://127.0.0.1:8888/login
+LocalInterFace: http://127.0.0.1:8889/
+fromEmail: noobmantest@foxmail.com
+fromEmailAuthorizationCode: taffogconzptibic
 
 server:
   port: 9000

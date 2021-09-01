@@ -19,6 +19,8 @@ public class AutoPunchController {
     AutoPunchService autoPunchService;
     @Autowired
     UserService userService;
+    @Autowired
+    UserPunch userPunch;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -43,7 +45,7 @@ public class AutoPunchController {
         // 更改后再次查询
         userList = userService.findAll();
         for (User user : userList) {
-            new UserPunch().punch(user);
+            userPunch.punch(user);
         }
         return "autoPunchRunNow打卡启动";
     }

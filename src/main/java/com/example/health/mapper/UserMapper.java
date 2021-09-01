@@ -33,6 +33,10 @@ public interface UserMapper {
     List<User> findUserByEmail(String email);
 
     // 通过用户名查询用户
-    @Select("select id,user,email,days,today,city_code,address from user where user=#{user}")
-    List<User> findUserByUser(String user);
+    @Select("select * from user where user=#{user}")
+    List<User> countUserByUser(String user);
+
+    // 通过用户名和密码查询用户
+    @Select("select * from user where user=#{user} and password=#{password}")
+    List<User> findUserByUserAndPassword(String user, String password);
 }

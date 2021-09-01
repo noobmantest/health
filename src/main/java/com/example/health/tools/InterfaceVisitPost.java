@@ -22,6 +22,7 @@ public class InterfaceVisitPost {
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public String post(String strURL, Map<String, String> map) {
+        System.out.println(map + "=============" + strURL);
         try {
             String params = map2Json(map);
             BufferedReader reader = null;

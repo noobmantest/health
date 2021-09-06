@@ -23,10 +23,8 @@ import java.util.Date;
  * 根据返回结果发送邮件给用户
  * */
 
-@Service
+
 @Component
-@Resource
-@Controller
 public class UserPunch {
     @Autowired
     UserService userService;
@@ -37,18 +35,15 @@ public class UserPunch {
 
     public String punch(User user) {
         logger.info("尝试打卡 ==== " + user);
-        if (user.getToday().equals("0") && user.getDays() > 0) {
+        // 判断条件：今天打卡状态为0，用户打卡天数>0，开关为1
+        if (user.getToday().equals("0") && user.getDays() > 0 && user.getOpen() == 1) {
             logger.info("符合条件用户开始打卡 ==== " + user);
             // 访问打卡接口
             String res = new AutoPunchOperate().autoPunch(user);
 
             // 切割字符串，获取success，否则是不成功情况
             String isSuccess = res.substring(0, 7);
-            // 访问log数据接口 添加log数据
-//            new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), isSuccess);
-            Log log = new Log(user.getUser(), user.getPassword(), isSuccess, String.valueOf(System.currentTimeMillis()));
-            logger.info("添加log数据 ==== " + log);
-//            logService.insertLog(log);
+
 
             // 成功情况
             if (isSuccess.equals("success")) {
@@ -59,6 +54,11 @@ public class UserPunch {
                 // 今天打卡状态更改为 1，表示打卡成功
 //                new UserOperate().todayChange(user, "1");
                 userService.updateUserToday(user.getId(), "1");
+                // 添加log数据
+                Log log = new Log(user.getUser(), user.getPassword(), isSuccess, String.valueOf(System.currentTimeMillis()));
+                logger.info("成功情况添加log数据 ==== " + log);
+                logService.insertLog(log);
+
                 // 发送邮件给用户
                 String message = new Date().toString() + "账号: " + user.getUser() + "：打卡成功！感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
                 try {
@@ -67,9 +67,9 @@ public class UserPunch {
                 } catch (Exception e) {
                     // 发送邮件失败情况，添加日志
                     logger.error("邮件发送失败 ==== " + user);
-                    // 发送邮件失败添加日志
-                    // new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
                     Log logFail = new Log(user.getUser(), user.getPassword(), "sendEmailError", String.valueOf(System.currentTimeMillis()));
+                    // 发送邮件失败添加日志
+                    logger.error("发送邮件失败添加日志 ==== " + logFail);
                     logService.insertLog(logFail);
                     e.printStackTrace();
                 }
@@ -87,6 +87,8 @@ public class UserPunch {
                     // 发送邮件失败情况，添加日志
 //                    new LogInterfaceOperate().insertLog(user.getUser(), user.getPassword(), "sendEmailError");
                     Log logFail = new Log(user.getUser(), user.getPassword(), "sendEmailError", String.valueOf(System.currentTimeMillis()));
+                    // 发送邮件失败添加日志
+                    logger.error("发送邮件失败添加日志 ==== " + logFail);
                     logService.insertLog(logFail);
                     e.printStackTrace();
                 }

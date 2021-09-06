@@ -9,6 +9,36 @@ public class User {
     private String email;
     private String city_code;
     private String address;
+    private int open = 1;
+    private int inviteNums = 0;
+    private int addDays = 0;
+
+    public User() {
+    }
+
+    public User(String user, String password, int days, String today, String email, String city_code, String address) {
+        this.user = user;
+        this.password = password;
+        this.days = days;
+        this.today = today;
+        this.email = email;
+        this.city_code = city_code;
+        this.address = address;
+    }
+
+    public User(int id, String user, String password, int days, String today, String email, String city_code, String address, int open, int inviteNums, int addDays) {
+        this.id = id;
+        this.user = user;
+        this.password = password;
+        this.days = days;
+        this.today = today;
+        this.email = email;
+        this.city_code = city_code;
+        this.address = address;
+        this.open = open;
+        this.inviteNums = inviteNums;
+        this.addDays = addDays;
+    }
 
     public String getCity_code() {
         return city_code;
@@ -74,6 +104,30 @@ public class User {
         this.email = email;
     }
 
+    public int getOpen() {
+        return open;
+    }
+
+    public void setOpen(int open) {
+        this.open = open;
+    }
+
+    public int getInviteNums() {
+        return inviteNums;
+    }
+
+    public void setInviteNums(int inviteNums) {
+        this.inviteNums = inviteNums;
+    }
+
+    public int getAddDays() {
+        return addDays;
+    }
+
+    public void setAddDays(int addDays) {
+        this.addDays = addDays;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -85,6 +139,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", city_code='" + city_code + '\'' +
                 ", address='" + address + '\'' +
+                ", open=" + open +
+                ", inviteNums=" + inviteNums +
+                ", addDays=" + addDays +
                 '}';
     }
 }

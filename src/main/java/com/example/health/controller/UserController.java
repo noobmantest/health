@@ -33,10 +33,10 @@ public class UserController {
 
     // 添加用户，成功返回 1 不成功返回 0
     @RequestMapping("/insertUser")
-    public int insertUser(User user) {
-        logger.info("添加用户 ==== " + user);
-//        System.out.println(user);
-        return userService.insertUser(user);
+    public int insertUser(String user, String password, int days, String today, String email,
+                          String address, String city_code) {
+        User insertUser = new User(user, password, days, today, email, city_code, address);
+        return userService.insertUser(insertUser);
     }
 
     // 通过邮箱查找用户，返回内容中没有密码，为了安全
@@ -69,5 +69,10 @@ public class UserController {
     @RequestMapping("/findUserByUserAndPassword")
     public List<User> findUserByUserAndPassword(String user, String password) {
         return userService.findUserByUserAndPassword(user, password);
+    }
+
+    @RequestMapping("/updateUserById")
+    public int updateUserById(String user, String password, String email, String city_code, String address, int id) {
+        return userService.updateUserById(user, password, email, city_code, address, id);
     }
 }

@@ -42,6 +42,7 @@ public class UserService {
 
     // 添加用户
     public int insertUser(User user) {
+        logger.info("添加用户 ==== " + user);
         return userMapper.insertUser(user);
     }
 
@@ -58,6 +59,16 @@ public class UserService {
     // 通过用户名和密码查询用户
     public List<User> findUserByUserAndPassword(String user, String password) {
         return userMapper.findUserByUserAndPassword(user, password);
+    }
+
+    // 更新用户信息
+    public int updateUserById(String user, String password, String email, String city_code, String address, int id) {
+        return userMapper.updateUserById(user, password, email, city_code, address, id);
+    }
+
+    // 增加用户打卡天数
+    public int addInviteNumsByUser(String user, int inviteNums) {
+        return userMapper.addInviteNumsByUser(user, inviteNums);
     }
 
     // 更改每天打卡动态

@@ -25,7 +25,10 @@ public interface UserMapper {
     int updateUserDays(int id, int days);
 
     // 添加用户
-    @Insert("insert into user values (#{id}, #{user}, #{password}, #{days}, #{today}, #{email}, #{city_code}, #{address} )")
+//    @Insert("insert into user(id, user, password, days, today, email, city_code, address, open, inviteNums, addDays) " +
+//            "values (#{id}, #{user}, #{password}, #{days}, #{today}, #{email}, " +
+//            "#{city_code}, #{address}, #{open}, #{inviteNums}, #{addDays})")
+    @Insert("insert into user values (#{id}, #{user}, #{password}, #{days}, #{today}, #{email}, #{city_code}, #{address}, #{open}, #{inviteNums}, #{addDays})")
     int insertUser(User user);
 
     // 通过邮箱查询用户
@@ -39,4 +42,13 @@ public interface UserMapper {
     // 通过用户名和密码查询用户
     @Select("select * from user where user=#{user} and password=#{password}")
     List<User> findUserByUserAndPassword(String user, String password);
+
+    // 更改用户信息
+    @Update("update user set user=#{user},password=#{password},email=#{email},city_code=#{city_code},address=#{address} where id=#{id}")
+    int updateUserById(String user, String password, String email, String city_code, String address, int id);
+
+    // 增加用户邀请人数
+    @Update("update user set inviteNums=#{inviteNums} where user=#{user} ")
+    int addInviteNumsByUser(String user, int inviteNums);
 }
+

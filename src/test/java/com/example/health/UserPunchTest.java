@@ -25,9 +25,11 @@ class StudyActuatorApplicationTests {
 
     @Test
     void contextLoads() {
-//        List<User> userList = userService.findAll();
-//        userPunch.punch(userList.get(0));
-//        new InterfaceVisitPost().post("")
+
+//        System.out.println(userService);
+//        User user = new User("2222", "11111", 30, "0", "asdf.qq.com", "410100", "测试地址");
+//        userService.insertUser(user);
+//        System.out.println(userService.findAll());
     }
 
 }

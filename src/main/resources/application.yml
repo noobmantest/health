@@ -47,4 +47,4 @@ spring:
 ---
 spring:
   profiles:
-    active: pro
+    active: dev

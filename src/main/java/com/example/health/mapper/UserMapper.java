@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
-
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @Mapper
@@ -37,15 +35,15 @@ public interface UserMapper {
 
     // 通过用户名查询用户
     @Select("select * from user where user=#{user}")
-    List<User> countUserByUser(String user);
+    List<User> findUserByUser(String user);
 
     // 通过用户名和密码查询用户
     @Select("select * from user where user=#{user} and password=#{password}")
     List<User> findUserByUserAndPassword(String user, String password);
 
     // 更改用户信息
-    @Update("update user set user=#{user},password=#{password},email=#{email},city_code=#{city_code},address=#{address} where id=#{id}")
-    int updateUserById(String user, String password, String email, String city_code, String address, int id);
+    @Update("update user set user=#{user},password=#{password},email=#{email},city_code=#{city_code},address=#{address},open=#{open} where id=#{id}")
+    int updateUserById(String user, String password, String email, String city_code, String address, int open, int id);
 
     // 增加用户邀请人数
     @Update("update user set inviteNums=#{inviteNums} where user=#{user} ")

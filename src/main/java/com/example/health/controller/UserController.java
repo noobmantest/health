@@ -32,11 +32,17 @@ public class UserController {
     }
 
     // 添加用户，成功返回 1 不成功返回 0
+//    @RequestMapping("/insertUser")
+//    public int insertUser(String user, String password, int days, String today, String email,
+//                          String address, String city_code) {
+//        User insertUser = new User(user, password, days, today, email, city_code, address);
+//        return userService.insertUser(insertUser);
+//    }
+
+    // 添加用户，成功返回 1 不成功返回 0。inviteUser为邀请码，邀请码为空时不增加邀请人数
     @RequestMapping("/insertUser")
-    public int insertUser(String user, String password, int days, String today, String email,
-                          String address, String city_code) {
-        User insertUser = new User(user, password, days, today, email, city_code, address);
-        return userService.insertUser(insertUser);
+    public String insertUser(User insertUser, String inviteUser) {
+        return userService.insertUser(insertUser, inviteUser);
     }
 
     // 通过邮箱查找用户，返回内容中没有密码，为了安全
@@ -71,8 +77,10 @@ public class UserController {
         return userService.findUserByUserAndPassword(user, password);
     }
 
+    // 更细腻用户信息
     @RequestMapping("/updateUserById")
-    public int updateUserById(String user, String password, String email, String city_code, String address, int id) {
-        return userService.updateUserById(user, password, email, city_code, address, id);
+    public int updateUserById(String user, String password, String email, String city_code, String address, int open, int id) {
+        return userService.updateUserById(user, password, email, city_code, address, open, id);
     }
+
 }

@@ -1,6 +1,5 @@
 package com.example.health.tools;
 
-import com.example.health.config.MyConfig;
 import com.example.health.entity.Log;
 import com.example.health.entity.User;
 import com.example.health.service.LogService;
@@ -9,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 /*
@@ -30,6 +26,8 @@ public class UserPunch {
     UserService userService;
     @Autowired
     LogService logService;
+    @Autowired
+    SendEmailToUser sendEmailToUser;
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -60,10 +58,13 @@ public class UserPunch {
                 logService.insertLog(log);
 
                 // 发送邮件给用户
-                String message = new Date().toString() + "账号: " + user.getUser() + "：打卡成功！感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
+                String message = new Date().toString() + "账号: " + user.getUser() +
+                        "：打卡成功！感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。推荐给更多用户可获得更多打卡天数哦！";
                 try {
-                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
-                            user.getEmail(), "每日健康打卡", message + res);
+                    String title = "每日健康打卡";
+                    sendEmailToUser.sendEmailToUser(user, title, message + res);
+//                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
+//                            user.getEmail(), "每日健康打卡", message + res);
                 } catch (Exception e) {
                     // 发送邮件失败情况，添加日志
                     logger.error("邮件发送失败 ==== " + user);
@@ -73,15 +74,17 @@ public class UserPunch {
                     logService.insertLog(logFail);
                     e.printStackTrace();
                 }
-            } else if (new Date().getHours() >= 8) {
+            } else if (new Date().getHours() >= 6) {
                 // 打卡不成功情况，提醒用户
-                logger.error("脚本异常且在9点之后 ==== 发送邮件给用户提醒手动打卡 ==== " + user);
+                logger.error("脚本异常且在6点之后 ==== 发送邮件给用户提醒手动打卡 ==== " + user);
                 String message = new Date().toString() + " 账号: " + user.getUser() +
                         "：自动打卡失败。请核实账号、密码、地市选择是否正确，请手动打卡，今日打卡不计算入天数哦。" +
                         "感谢使用，请您关注每日邮件提醒。自动打卡服务还剩余" + user.getDays() + "天。";
                 try {
-                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
-                            user.getEmail(), "每日健康打卡==失败", message);
+                    String title = "每日健康打卡==失败";
+                    sendEmailToUser.sendEmailToUser(user, title, message);
+//                    new SendEmailTools().sendEmail(MyConfig.fromEmail, MyConfig.fromEmailAuthorizationCode,
+//                            user.getEmail(), "每日健康打卡==失败", message);
                 } catch (Exception e) {
                     logger.error("邮件发送失败 ==== " + user);
                     // 发送邮件失败情况，添加日志

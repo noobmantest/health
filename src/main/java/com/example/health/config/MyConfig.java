@@ -5,8 +5,9 @@ import java.util.Map;
 
 public class MyConfig {
     //    本地服务时
-        public static final String IntegerFacePath = "http://127.0.0.1:8888/login";
-        public static final String LocalInterFace = "http://127.0.0.1:8889/";
+    public static final String IntegerFacePath = "http://127.0.0.1:8888/login";
+    public static final String IntegerFacePath_IsPasswordTrue = "http://127.0.0.1:8888/isPasswordTrue";
+    public static final String LocalInterFace = "http://127.0.0.1:8889/";
 
 
     // 放在远程服务器上时
